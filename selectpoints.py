@@ -1,7 +1,6 @@
 import cv2
 import csv
-
-NCORR = 8
+from utils import NCORR, IMG1_PATH, IMG2_PATH
 
 points = []
 curwindow = 1
@@ -17,13 +16,11 @@ def drawpoint(event, x, y, flags, param):
             curwindow = 1
         points.append([x,y,1])
 
-img1 = cv2.imread('img1.JPG')
-img2 = cv2.imread('img2.JPG')
+img1 = cv2.imread(IMG1_PATH)
+img2 = cv2.imread(IMG2_PATH)
 
-width, height, _ = img1.shape
-
-img1 = cv2.resize(img1, (height//4, width//4))
-img2 = cv2.resize(img2, (height//4, width//4))
+img1 = cv2.resize(img1, (HEIGHT, WIDTH))
+img2 = cv2.resize(img2, (HEIGHT, WIDTH))
 
 cv2.namedWindow('image1')
 cv2.namedWindow('image2')

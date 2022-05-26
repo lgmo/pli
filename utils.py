@@ -1,13 +1,17 @@
 from numpy import *
+import csv
+
+NCORR = 8
+IMG1_PATH = 'img1.JPG'
+IMG2_PATH = 'img2.JPG'
+HEIGHT = 800
+WIDTH = 600
 
 def norm(points):
     points = array(points)
 
     x = [p[0] for p in points]
     y = [p[1] for p in points]
-    print(x,'hmmm')
-    # centroid
-    print('boba', sum(x)/len(x))
     C = array([mean(array(x)), mean(array(y)), 1])
 
     dist = lambda x : dot(x-C, x-C)**0.5
@@ -17,6 +21,7 @@ def norm(points):
     s = 2**0.5/mn
     T = array([[s, 0, -s*C[0]], [0, s, -s*C[1]], [0,0,1]])
 
+    
     # now C is the origin
     # avg dist to C is sqrt(2)
     print('oba', reshape(reshape(points[0], (3,1)),(1,3)).ravel())
@@ -52,4 +57,21 @@ def intersections(l, w, h):
             q = x
             break
     return p, q
+    
+def getpoints():
+    pointsimg1 = []
+    pointsimg2 = []
+    count = 0
+
+    with open('points.csv', 'r') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            line = [int(i) for i in row]
+            if count % 2:
+                pointsimg2.append(line)
+            else:
+                pointsimg1.append(line)
+            count += 1
+
+    return pointsimg1, pointsimg2
     
